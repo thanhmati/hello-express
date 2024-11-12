@@ -45,3 +45,4 @@ jobs:
                       cd app/hello-express
                       docker compose pull
                       docker compose up -d
+                      docker system prune -af
