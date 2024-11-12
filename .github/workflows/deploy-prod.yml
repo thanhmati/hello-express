@@ -11,4 +11,7 @@ jobs:
         name: run the job
         uses: ./.github/workflows/reusableWorkflow.yml
         with:
-            stage: prod
+            stage: "prod"
+        secrets:
+            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

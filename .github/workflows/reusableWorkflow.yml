@@ -7,13 +7,9 @@ on:
                 required: true
                 type: string
         secrets:
-            DOCKER_NAMESPACE:
-                required: true
             DOCKER_USERNAME:
                 required: true
             DOCKER_PASSWORD:
-                required: true
-            TAILSCALE_AUTHKEY:
                 required: true
 
 jobs:
