@@ -1,10 +1,11 @@
-name: Docker Image CI
+name: Reusable CI Workflow
 
 on:
-    push:
-        branches: ["main"]
-    pull_request:
-        branches: ["main"]
+    workflow_call:
+        inputs:
+            stage:
+                required: true
+                type: string
 
 jobs:
     build:
@@ -20,10 +21,10 @@ jobs:
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Build the Docker image
-              run: docker build -t ${{ secrets.DOCKER_NAMESPACE }}/hello-express:latest .
+              run: docker build -t ${{ secrets.DOCKER_NAMESPACE }}/hello-express_${{inputs.stage}}:latest .
 
             - name: Publish the Docker image to Docker Hub
-              run: docker push ${{ secrets.DOCKER_NAMESPACE }}/hello-express:latest
+              run: docker push ${{ secrets.DOCKER_NAMESPACE }}/hello-express_${{inputs.stage}}:latest
     deploy:
         needs: build
         runs-on: ubuntu-latest
@@ -43,6 +44,6 @@ jobs:
                   script: |
                       ls
                       cd app/hello-express
-                      docker compose pull
-                      docker compose up -d
+                      docker compose -f docker-compose.${{inputs.stage}}.yml pull
+                      docker compose -f docker-compose.${{inputs.stage}}.yml up -d
                       docker system prune -af

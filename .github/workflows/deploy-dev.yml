@@ -1,0 +1,17 @@
+name: Dev CI/CD Workflow
+
+on:
+    push:
+        branches: ["dev"]
+    pull_request:
+        branches: ["dev"]
+
+jobs:
+    call-reusableWorkflow:
+        name: run the job
+        uses: ./.github/workflows/reusableWorkflow.yml
+        with:
+            environment: "dev"
+        secrets:
+            SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
+            SERVER_USERNAME: ${{ secrets.DEV_SERVER_USERNAME }}

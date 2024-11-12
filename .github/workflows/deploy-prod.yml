@@ -1,0 +1,17 @@
+name: Prod CI/CD Workflow
+
+on:
+    push:
+        branches: ["prod"]
+    pull_request:
+        branches: ["prod"]
+
+jobs:
+    call-reusableWorkflow:
+        name: run the job
+        uses: ./.github/workflows/reusableWorkflow.yml
+        with:
+            environment: "prod"
+        secrets:
+            SERVER_HOST: ${{ secrets.PROD_SERVER_HOST }}
+            SERVER_USERNAME: ${{ secrets.PROD_SERVER_USERNAME }}
