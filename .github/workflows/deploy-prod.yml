@@ -11,4 +11,4 @@ jobs:
         name: run the job
         uses: ./.github/workflows/reusableWorkflow.yml
         with:
-            stage: "prod"
+            stage: prod
