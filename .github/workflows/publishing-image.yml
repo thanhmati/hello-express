@@ -41,5 +41,7 @@ jobs:
                   key: ${{ secrets.SERVER_KEY }}
                   port: ${{ secrets.SERVER_PORT }}
                   script: |
-                      whoami
                       ls
+                      cd app/hello-express
+                      docker compose pull
+                      docker compose up -d
