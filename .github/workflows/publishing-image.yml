@@ -20,7 +20,7 @@ jobs:
                   password: ${{ secrets.DOCKER_PASSWORD }}
 
             - name: Build the Docker image
-              run: docker build . -t hello-express:latest
+              run: docker build -t ${{ secrets.DOCKER_NAMESPACE }}/hello-express:latest .
 
             - name: Publish the Docker image to Docker Hub
-              run: docker push ${{ secrets.DOCKER_USERNAME }}/hello-express:latest
+              run: docker push ${{ secrets.DOCKER_NAMESPACE }}/hello-express:latest
