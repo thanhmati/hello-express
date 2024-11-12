@@ -24,3 +24,15 @@ jobs:
 
             - name: Publish the Docker image to Docker Hub
               run: docker push ${{ secrets.DOCKER_NAMESPACE }}/hello-express:latest
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: SSH to server
+              uses: appleboy/ssh-action@v1.1.0
+              with:
+                  host: ${{ secrets.SERVER_HOST }}
+                  username: ${{ secrets.SERVER_USERNAME }}
+                  password: ${{ secrets.SERVER_PASSWORD }}
+                  port: ${{ secrets.SERVER_PORT }}
+                  script: whoami
