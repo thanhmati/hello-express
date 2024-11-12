@@ -11,7 +11,7 @@ jobs:
         name: run the job
         uses: ./.github/workflows/reusableWorkflow.yml
         with:
-            environment: "prod"
+            stage: "prod"
         secrets:
             SERVER_HOST: ${{ secrets.PROD_SERVER_HOST }}
             SERVER_USERNAME: ${{ secrets.PROD_SERVER_USERNAME }}
