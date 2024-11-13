@@ -39,23 +39,6 @@ jobs:
                   name: curl a tailscale machine over port 8080
                   command: |
                       curl "http://$SERVER_HOST"
-            - run:
-                  name: Deploy to SERVER
-                  command: |
-                      ssh $SERVER_USERNAME@$SERVER_HOST
-                      ls
-                      cd app/hello-express
-                      if [ "$ENVIRONMENT" = "prod" ]; then
-                        git checkout main
-                      else
-                        git checkout $ENVIRONMENT
-                      fi
-                      git pull
-                      cd docker
-                      docker compose -f docker-compose.$ENVIRONMENT.yml down
-                      docker compose -f docker-compose.$ENVIRONMENT.yml pull
-                      docker compose -f docker-compose.$ENVIRONMENT.yml up -d
-                      docker image prune -af
     ssh:
         machine:
             image: ubuntu-2204:2023.07.2
