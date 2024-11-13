@@ -34,7 +34,7 @@ jobs:
             - run:
                   name: curl a tailscale machine over port 8080
                   command: |
-                      until curl "http://[machine].[namespace].beta.tailscale.net:8080/"
+                      until curl "http://thanhdo.tail83e1de.ts.net"
                       do
                       sleep 1
                       done
