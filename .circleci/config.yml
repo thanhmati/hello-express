@@ -10,8 +10,6 @@ jobs:
         auth:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
-    machine:
-      image: ubuntu-2204:2023.07.2
     parameters:
       tailscale-auth-key:
         type: env_var_name
