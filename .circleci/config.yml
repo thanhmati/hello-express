@@ -30,10 +30,9 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
-            - run:
-                  name: Start Tailscale Daemon
-                  command: |
-                      sudo tailscaled &
+            - add_ssh_keys:
+                  fingerprints:
+                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
             - circleci-tailscale/connect
             - run:
                   name: curl a tailscale machine over port 8080
@@ -42,15 +41,6 @@ jobs:
                       do
                       sleep 1
                       done
-            - add_ssh_keys:
-                  fingerprints:
-                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
-            - run:
-                  name: Check Tailscale status
-                  command: tailscale status
-            - run:
-                  name: Deploy via SSH
-                  command: |
                       ssh thanhdo@100.110.248.12
 
 workflows:
