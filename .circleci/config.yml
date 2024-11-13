@@ -31,10 +31,15 @@ jobs:
             - ts/install
             - ts/connect
             - run:
+                  name: Ensure .ssh directory exists
+                  command: |
+                      mkdir -p ~/.ssh
+                      chmod 700 ~/.ssh
+            - run:
                   name: Add server to known_hosts
                   command: |
-                      # Tự động thêm dấu vân tay của máy chủ vào known_hosts
                       ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+                      chmod 644 ~/.ssh/known_hosts
             - run:
                   name: Ping an example Tailscale machine
                   command: |
