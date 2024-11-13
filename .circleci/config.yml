@@ -33,9 +33,6 @@ jobs:
             - run:
                   command: tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
                   name: Ping an example Tailscale machine
-            - run:
-                  name: Check Tailscale Status
-                  command: tailscale status
             - add_ssh_keys:
                   fingerprints:
                       - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
