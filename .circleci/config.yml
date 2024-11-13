@@ -42,7 +42,7 @@ jobs:
             - run:
                   name: Deploy Over SSH
                   command: |
-                      ssh $SERVER_USERNAME@$SERVER_HOST << EOF
+                      ssh $SERVER_USERNAME@$SERVER_HOST \<< EOF
                           ls
                           cd /app/hello-express
                           git checkout dev
