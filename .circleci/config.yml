@@ -28,11 +28,11 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
-            - ts/install
-            - ts/connect
-            - run:
-                  command: tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
-                  name: Ping an example Tailscale machine
+            # - ts/install
+            # - ts/connect
+            # - run:
+            #       command: tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
+            #       name: Ping an example Tailscale machine
             - add_ssh_keys:
                   fingerprints:
                       - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
