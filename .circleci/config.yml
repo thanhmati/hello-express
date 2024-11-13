@@ -39,28 +39,20 @@ jobs:
                   name: curl a tailscale machine over port 8080
                   command: |
                       curl "http://$SERVER_HOST"
-    ssh:
-        machine:
-            image: ubuntu-2204:2024.08.1
-        steps:
             - run:
                   name: Deploy Over SSH
                   command: |
-                      ssh $SERVER_USERNAME@$SERVER_HOST
-                      ls
+                      ssh $SERVER_USERNAME@$SERVER_HOST << EOF
+                          ls
+                          cd /app/hello-express
+                          git checkout dev
+                          git pull
+                      EOF
 
 workflows:
     deploy-dev:
         jobs:
             - deploy:
-                  context: dev
-                  filters:
-                      branches:
-                          only:
-                              - dev
-            - ssh:
-                  requires:
-                      - deploy
                   context: dev
                   filters:
                       branches:
