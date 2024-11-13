@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+    ts: hubci/tailscale@0.1
+
 jobs:
     deploy:
         docker:
@@ -7,6 +10,10 @@ jobs:
               auth:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
+        parameters:
+            auth-key:
+                type: env_var_name
+                default: TS_AUTHKEY
 
         steps:
             - checkout
@@ -21,7 +28,17 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
-
+            - ts/install
+            - ts/connect
+            - run:
+                  name: Add server to known_hosts
+                  command: |
+                      # Tự động thêm dấu vân tay của máy chủ vào known_hosts
+                      ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+            - run:
+                  name: Ping an example Tailscale machine
+                  command: |
+                      tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
             - add_ssh_keys:
                   fingerprints:
                       - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
@@ -32,7 +49,7 @@ jobs:
             - run:
                   name: Deploy via SSH
                   command: |
-                      ssh thanhdo@100.110.248.12
+                      ssh -o StrictHostKeyChecking=no thanhdo@100.110.248.12
 
 workflows:
     deploy-dev:
