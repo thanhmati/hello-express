@@ -22,31 +22,29 @@ jobs:
             - setup_remote_docker:
                   docker_layer_caching: true
             - run:
-                  name: Check environment
-                  command: |
-                      echo "Deploying to $ENVIRONMENT environment"
-            - run:
                   name: Build Docker image
                   command: |
-                      docker build -t $DOCKER_NAMESPACE/hello-express_$ENVIRONMENT .
+                      docker build -t $DOCKER_USERNAME/hello-express-test .
             - run:
                   name: Push application Docker image
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-                      docker push $DOCKER_NAMESPACE/hello-express_$ENVIRONMENT
+                      docker push $DOCKER_USERNAME/hello-express-test
             - circleci-tailscale/connect
             - run:
                   name: curl a tailscale machine over port 8080
                   command: |
-                      curl "http://$SERVER_HOST"
+                      until curl "http://thanhdo.tail83e1de.ts.net"
+                      do
+                      sleep 1
+                      done
+            - add_ssh_keys:
+                  fingerprints:
+                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
             - run:
-                  name: Deploy Over SSH
+                  name: Deploy via SSH
                   command: |
-                      ssh -o StrictHostKeyChecking=no $SERVER_USERNAME@$SERVER_HOST 
-                          ls
-                          cd /app/hello-express
-                          git checkout dev
-                          git pull
+                      ssh thanhdo@100.110.248.12
 
 workflows:
     deploy-dev:
