@@ -42,6 +42,9 @@ jobs:
                   fingerprints:
                       - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
             - run:
+                  name: Check Tailscale status
+                  command: tailscale status
+            - run:
                   name: Deploy via SSH
                   command: |
                       ssh thanhdo@100.110.248.12
