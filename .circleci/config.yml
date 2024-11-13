@@ -37,10 +37,7 @@ jobs:
             - run:
                   name: curl a tailscale machine over port 8080
                   command: |
-                      until curl "http://thanhdo.tail83e1de.ts.net"
-                      do
-                      sleep 1
-                      done
+                      curl "http://thanhdo.tail83e1de.ts.net"
                       ssh thanhdo@100.110.248.12
 
 workflows:
