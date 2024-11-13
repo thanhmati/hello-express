@@ -78,6 +78,11 @@ workflows:
             - ssh:
                   requires:
                       - deploy
+                  context: dev
+                  filters:
+                      branches:
+                          only:
+                              - dev
     deploy-staging:
         jobs:
             - deploy:
