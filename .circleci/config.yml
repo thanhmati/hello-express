@@ -6,7 +6,7 @@ orbs:
 jobs:
     deploy:
         docker:
-            - image: cimg/base:2022.09
+            - image: cimg/base:current
               auth:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
