@@ -8,11 +8,13 @@ on:
                 type: string
         secrets:
             DOCKER_USERNAME:
-                required: true
             DOCKER_PASSWORD:
-                required: true
             DOCKER_NAMESPACE:
-                required: true
+            TAILSCALE_AUTHKEY:
+            SERVER_HOST:
+            SERVER_USERNAME:
+            SERVER_KEY:
+            SERVER_PORT:
 
 jobs:
     build:
@@ -53,6 +55,12 @@ jobs:
                   script: |
                       ls
                       cd app/hello-express
+                      if [ "${{inputs.stage}}" = "prod" ]; then
+                        git checkout main
+                      else
+                        git checkout ${{inputs.stage}}
+                      fi
+                      git pull
                       docker compose -f docker-compose.${{inputs.stage}}.yml pull
                       docker compose -f docker-compose.${{inputs.stage}}.yml up -d
                       docker system prune -af
