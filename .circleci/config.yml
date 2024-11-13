@@ -10,13 +10,6 @@ jobs:
               auth:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
-        parameters:
-            tailscale-auth-key:
-                type: env_var_name
-                default: TAILSCALE_AUTH_KEY
-            tailscale-proxy-address:
-                type: string
-                default: localhost
         steps:
             - checkout
             - setup_remote_docker:
@@ -30,6 +23,19 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
+
+    deploy:
+        docker:
+            - image: cimg/base:2022.09
+        parameters:
+            tailscale-auth-key:
+                type: env_var_name
+                default: TAILSCALE_AUTH_KEY
+            tailscale-proxy-address:
+                type: string
+                default: localhost]
+        steps:
+            - checkout
             - circleci-tailscale/connect
             - run:
                   name: curl a tailscale machine over port 8080
@@ -38,8 +44,12 @@ jobs:
                       do
                       sleep 1
                       done
-
 workflows:
     deploy-workflow:
         jobs:
             - build
+            - deploy:
+                  requires:
+                      - build
+                  parameters:
+                      tailscale-auth-key: TAILSCALE_AUTH_KEY
