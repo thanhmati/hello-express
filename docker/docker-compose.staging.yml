@@ -1,0 +1,6 @@
+services:
+    hello-express:
+        container_name: hello-express_staging
+        image: thanhmati/hello-express_staging
+        ports:
+            - "3002:3000"
