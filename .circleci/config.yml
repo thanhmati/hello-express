@@ -41,7 +41,7 @@ jobs:
                       curl "http://$SERVER_HOST"
     ssh:
         machine:
-            image: ubuntu-2204:2023.07.2
+            image: ubuntu-2204:2024.08.1
         steps:
             - run:
                   name: Deploy Over SSH
