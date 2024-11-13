@@ -61,6 +61,8 @@ jobs:
                         git checkout ${{inputs.stage}}
                       fi
                       git pull
+                      cd docker
+                       docker compose -f docker-compose.${{inputs.stage}}.yml down
                       docker compose -f docker-compose.${{inputs.stage}}.yml pull
                       docker compose -f docker-compose.${{inputs.stage}}.yml up -d
                       docker image prune -af
