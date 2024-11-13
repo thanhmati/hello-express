@@ -1,5 +1,5 @@
 services:
-    hello-express:
+    hello-express_staging:
         container_name: hello-express_staging
         image: thanhmati/hello-express_staging
         ports:
