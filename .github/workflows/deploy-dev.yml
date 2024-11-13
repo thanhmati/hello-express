@@ -16,3 +16,8 @@ jobs:
             DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
             DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
             DOCKER_NAMESPACE: ${{ secrets.DOCKER_NAMESPACE }}
+            TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY }}
+            SERVER_HOST: ${{secrets.SERVER_HOST}}
+            SERVER_USERNAME: ${{secrets.SERVER_USERNAME}}
+            SERVER_KEY: ${{secrets.SERVER_KEY}}
+            SERVER_PORT: ${{secrets.SERVER_PORT}}
