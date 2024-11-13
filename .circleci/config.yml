@@ -1,26 +1,44 @@
 version: 2.1
-jobs:
-  build:
-    docker:
-      - image: cimg/base:2022.09
-        auth:
-          username: $DOCKER_USERNAME
-          password: $DOCKER_PASSWORD
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t $DOCKER_USERNAME/hello-express-test .
-      - run:
-          name: Push application Docker image
-          command: |
-            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-            docker push $DOCKER_USERNAME/hello-express-test
 
-            
+orbs:
+    circleci-tailscale: threecomma/circleci-tailscale@2.2.0
+
+jobs:
+    build:
+        docker:
+            - image: cimg/base:2022.09
+              auth:
+                  username: $DOCKER_USERNAME
+                  password: $DOCKER_PASSWORD
+        parameters:
+            tailscale-auth-key:
+                type: env_var_name
+                default: TAILSCALE_AUTH_KEY
+            tailscale-proxy-address:
+                type: string
+                default: localhost
+        steps:
+            - checkout
+            - setup_remote_docker:
+                  docker_layer_caching: true
+            - run:
+                  name: Build Docker image
+                  command: |
+                      docker build -t $DOCKER_USERNAME/hello-express-test .
+            - run:
+                  name: Push application Docker image
+                  command: |
+                      echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                      docker push $DOCKER_USERNAME/hello-express-test
+            - circleci-tailscale/connect
+            - run:
+                  name: curl a tailscale machine over port 8080
+                  command: |
+                      until curl "http://[machine].[namespace].beta.tailscale.net:8080/"
+                      do
+                      sleep 1
+                      done
+
 workflows:
     deploy-workflow:
         jobs:
