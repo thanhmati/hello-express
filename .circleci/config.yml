@@ -21,10 +21,10 @@ jobs:
             - checkout
             - setup_remote_docker:
                   docker_layer_caching: true
-             - run:
+            - run:
                   name: Check environment
                   command: |
-                      echo "Deploying to $ENVIRONMENT environment"      
+                      echo "Deploying to $ENVIRONMENT environment"
             - run:
                   name: Build Docker image
                   command: |
