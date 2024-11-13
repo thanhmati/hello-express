@@ -30,6 +30,10 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
+            - run:
+                  name: Start Tailscale Daemon
+                  command: |
+                      sudo tailscaled &
             - circleci-tailscale/connect
             - run:
                   name: curl a tailscale machine over port 8080
