@@ -1,6 +1,0 @@
-services:
-    hello-express:
-        container_name: hello-express
-        image: thanhmati/hello-express_dev
-        ports:
-            - "3000:3000"
