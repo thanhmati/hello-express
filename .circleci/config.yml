@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-    circleci-tailscale: threecomma/circleci-tailscale@2.2.0
+    tailscale: hubci/tailscale@0.3.1
 
 jobs:
     deploy:
@@ -11,9 +11,9 @@ jobs:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
         parameters:
-            tailscale-auth-key:
+            auth-key:
                 type: env_var_name
-                default: TAILSCALE_AUTH_KEY
+                default: TS_AUTHKEY
 
         steps:
             - checkout
@@ -28,14 +28,11 @@ jobs:
                   command: |
                       echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                       docker push $DOCKER_USERNAME/hello-express-test
-            - circleci-tailscale/connect
+            - tailscale/install
+            - tailscale/connect
             - run:
-                  name: curl a tailscale machine over port 8080
-                  command: |
-                      until curl "http://thanhdo.tail83e1de.ts.net"
-                      do
-                        sleep 1
-                      done
+                  command: tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
+                  name: Ping an example Tailscale machine
             - run:
                   name: Check Tailscale Status
                   command: tailscale status
