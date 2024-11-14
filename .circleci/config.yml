@@ -46,6 +46,10 @@ jobs:
                   command: |
                       curl "http://100.110.248.12"
             - ssh/exec
+                fingerprint: SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0 
+                host: 100.110.248.12
+                user: thanhdo
+                script: ls
 
 workflows:
     deploy-dev:
