@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
     ts: hubci/tailscale@0.1
+    ssh: credijusto/ssh@0.5.5
 
 jobs:
     deploy:
@@ -14,6 +15,9 @@ jobs:
             auth-key:
                 type: env_var_name
                 default: TS_AUTHKEY
+            host_url:
+                type: env_var_name
+                default: HOST_URL
 
         steps:
             - checkout
@@ -33,17 +37,13 @@ jobs:
             - run:
                   name: Ping to server
                   command: |
-                      curl "http://thanhdo.tail83e1de.ts.net"
-            - add_ssh_keys:
-                  fingerprints:
-                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
+                      curl "http://100.110.248.12"
+            - ssh/ssh-add-host
+            - ssh/ssh-setup
             - run:
                   name: Commands over SSH without host context
-                  no_output_timeout: 10m
                   command: |
-                      ssh -o StrictHostKeyChecking=no -T thanhdo@100.110.248.12 \<< 'EOSSH'
-                      pwd
-                      EOSSH
+                      ssh -o StrictHostKeyChecking=no -T thanhdo@100.110.248.12
 
 workflows:
     deploy-dev:
