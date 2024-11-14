@@ -34,6 +34,9 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://thanhdo.tail83e1de.ts.net"
+            - add_ssh_keys:
+                  fingerprints:
+                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
             - run:
                   name: Commands over SSH without host context
                   no_output_timeout: 10m
