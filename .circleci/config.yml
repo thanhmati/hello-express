@@ -31,30 +31,9 @@ jobs:
             - ts/install
             - ts/connect
             - run:
-                  name: Ensure .ssh directory exists
-                  command: |
-                      mkdir -p ~/.ssh
-                      chmod 700 ~/.ssh
-            - run:
-                  name: Add server to known_hosts
-                  command: |
-                      ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
-                      chmod 644 ~/.ssh/known_hosts
-            - run:
-                  name: Ping an example Tailscale machine
-                  command: |
-                      tailscale --socket=/tmp/tailscaled.sock ping 100.110.248.12
-            - add_ssh_keys:
-                  fingerprints:
-                      - SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
-            - run:
                   name: Ping to server
                   command: |
                       curl "http://thanhdo.tail83e1de.ts.net"
-            - run:
-                  name: Deploy via SSH
-                  command: |
-                      ssh -o StrictHostKeyChecking=no thanhdo@100.110.248.12
 
 workflows:
     deploy-dev:
