@@ -38,6 +38,7 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://100.110.248.12"
+            - ssh/install-dependencies
             - ssh/ssh-add-host
             - ssh/ssh-setup
             - run:
