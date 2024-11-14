@@ -2,8 +2,7 @@ version: 2.1
 
 orbs:
     ts: hubci/tailscale@0.1
-    ssh: credijusto/ssh@0.5.5
-
+    
 jobs:
     deploy:
         docker:
@@ -15,9 +14,6 @@ jobs:
             auth-key:
                 type: env_var_name
                 default: TS_AUTHKEY
-            host_url:
-                type: env_var_name
-                default: HOST_URL
 
         steps:
             - checkout
@@ -38,13 +34,7 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://100.110.248.12"
-            - ssh/install-dependencies
-            - ssh/ssh-add-host
-            - ssh/ssh-setup
-            - run:
-                  name: Commands over SSH without host context
-                  command: |
-                      ssh -o StrictHostKeyChecking=no -T thanhdo@100.110.248.12
+            
 
 workflows:
     deploy-dev:
