@@ -14,18 +14,7 @@ jobs:
             auth-key:
                 type: env_var_name
                 default: TS_AUTHKEY
-            fingerprint:
-                type: string
-                default: SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0
-            host:
-                type: string
-                default: 100.110.248.12
-            user:
-                type: string
-                default: thanhdo
-            script:
-                type: string
-                default: ls
+           
         steps:
             - checkout
             - setup_remote_docker:
@@ -45,7 +34,7 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://100.110.248.12"
-            - ssh/exec
+            - ssh/exec:
                 fingerprint: SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0 
                 host: 100.110.248.12
                 user: thanhdo
