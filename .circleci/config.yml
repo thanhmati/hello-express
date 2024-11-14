@@ -22,7 +22,7 @@ jobs:
                 default: 100.110.248.12
             user:
                 type: string
-                default: thanhdo        
+                default: thanhdo
             script:
                 type: string
                 default: ls
@@ -45,7 +45,7 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://100.110.248.12"
-            
+            - ssh/exec
 
 workflows:
     deploy-dev:
