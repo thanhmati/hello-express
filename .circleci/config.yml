@@ -41,7 +41,7 @@ jobs:
             - run:
                 name: add to known hosts
                 command: |
-                    sudo ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+                     ssh-keyscan -H 192.168.1.213 >> ~/.ssh/known_hosts
 
 workflows:
     deploy-dev:
