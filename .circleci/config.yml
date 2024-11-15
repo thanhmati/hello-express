@@ -39,7 +39,10 @@ jobs:
             - run:
                 name: add to known hosts
                 command: |
-                     ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+                     echo '
+                     100.110.248.12 
+                     ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMquHCqVVm2aAKyXsMfuu/VUVNkLYGRrBbo3FbjuFIDBSw6crPGl8DvpVT++lpNpB7IVuX0VRKRYayTTCtLVDJk=
+                     ' >> ~/.ssh/known_hosts
 
 workflows:
     deploy-dev:
