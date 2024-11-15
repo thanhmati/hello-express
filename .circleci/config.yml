@@ -39,6 +39,9 @@ jobs:
                   command: |
                       curl "http://100.110.248.12"
             - run:
+                    name: Install ping utility
+                    command: sudo apt-get update && sudo apt-get install -y iputils-ping          
+            - run:
                 name: Check server connectivity
                 command: |
                     ping -c 4 100.110.248.12          
