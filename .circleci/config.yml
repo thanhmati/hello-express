@@ -40,10 +40,15 @@ jobs:
                 name: add to known hosts
                 command: |
                      echo '
-                     100.110.248.12 
-                     ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMquHCqVVm2aAKyXsMfuu/VUVNkLYGRrBbo3FbjuFIDBSw6crPGl8DvpVT++lpNpB7IVuX0VRKRYayTTCtLVDJk=
+                     100.110.248.12 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMquHCqVVm2aAKyXsMfuu/VUVNkLYGRrBbo3FbjuFIDBSw6crPGl8DvpVT++lpNpB7IVuX0VRKRYayTTCtLVDJk=
+                     100.110.248.12 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHPHtMvkVRvnO2vFlUL+QnvIG3hFcbJph5nc9azDltVB
+                     100.110.248.12 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxTTLJT26CTIbk9lfK7ONZpdxYh/g2tP/fUKB+SwRuW6taJuKElGaPO25mn44XhlXDpwDLEO+XODbghuP0qZUA/Bc73DB/qeTLJG8STr47EDtuTuZra9aAoSKu03QBRLglhnqxxH+1yi67IN8yP04BtnOK/+zVOhb89cg2UZYAlHwYTk1oGkwe/HnDnnqGfLwArzyy0WHAQCianQDKW6RQajzojD0QvRDOfIfvq/wQH1j8130zsAeW7kCpQw1CCt2HKcgLmIcz3BVSudh4CizSFHRWl4bLcL6M5nfjtG+ESj04affGEGtrwiCCh63Hp7TL3Nrh50scm6TSYHWPQv8fidpY6Zd4DmX3aM8NQ0xtOIE0/TIpWDqRIWH4OinQgXKrAU8QyrXnqNOfCNwn5GkoBuj6f67mYdcebQ+pwEA+ZM8Jief8cEp4g27aG1UmFtJyP7trEBnf74LJKH+wFKTdGe8HlHlghfVr8sPi1OeJFj+fe7EewiIsvT7fxH0CViU=
                      ' >> ~/.ssh/known_hosts
-                     cat ~/.ssh/known_hosts    
+                     cat ~/.ssh/known_hosts
+            - run:
+                name: ssh to server
+                command: |
+                      ssh thanhdo@100.110.248.12             
 workflows:
     deploy-dev:
         jobs:
