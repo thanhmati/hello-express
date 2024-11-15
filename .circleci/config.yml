@@ -5,7 +5,7 @@ orbs:
 jobs:
     deploy:
         docker:
-            - image: circleci/node:18
+            - image: cimg/node:23.1.0
               auth:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
@@ -15,8 +15,6 @@ jobs:
                 default: TS_AUTHKEY
            
         steps:
-            - run: sudo apt update
-            - run: sudo apt-get install rsync
             - add_ssh_keys:
                 fingerprints:
                     - "SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0"        
@@ -37,18 +35,11 @@ jobs:
             - run:
                   name: Ping to server
                   command: |
-                      curl "http://100.110.248.12"
-            - run:
-                    name: Install ping utility
-                    command: sudo apt-get update && sudo apt-get install -y iputils-ping          
-            - run:
-                name: Check server connectivity
-                command: |
-                    ping -c 4 100.110.248.12          
+                      curl "http://192.168.1.213"    
             - run:
                 name: add to known hosts
                 command: |
-                     ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+                     ssh-keyscan -H 192.168.1.213 >> ~/.ssh/known_hosts
 
 workflows:
     deploy-dev:
