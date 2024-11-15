@@ -5,7 +5,7 @@ orbs:
 jobs:
     deploy:
         docker:
-            - image: cimg/base:current
+            - image: circleci/node:18
               auth:
                   username: $DOCKER_USERNAME
                   password: $DOCKER_PASSWORD
