@@ -35,7 +35,7 @@ jobs:
                   command: |
                       curl "http://100.110.248.12"
             - ssh/exec:
-                fingerprint: SHA256:TK1Ffyxn/8bFbibxBFnc/Boreyn/TfcZ3HNnAaTbwJU.
+                fingerprint: SHA256:TK1Ffyxn/8bFbibxBFnc/Boreyn/TfcZ3HNnAaTbwJU
                 host: 100.110.248.12
                 user: thanhdo
                 script: ls
