@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
     ts: hubci/tailscale@0.1
-    ssh: skillup/ssh@2.1.0
 jobs:
     deploy:
         docker:
@@ -34,11 +33,18 @@ jobs:
                   name: Ping to server
                   command: |
                       curl "http://100.110.248.12"
-            - ssh/exec:
-                fingerprint: SHA256:TK1Ffyxn/8bFbibxBFnc/Boreyn/TfcZ3HNnAaTbwJU
-                host: 100.110.248.12
-                user: thanhdo
-                script: ls
+            - add_ssh_keys:
+                fingerprints:
+                    - "SHA256:kGySpgc3I6XxXGe02JXR+Yl862rm+FtVGBAc5rfDQz0"
+            - run:
+                  name: Add server to known_hosts
+                  command: |
+                      ssh-keyscan -H 100.110.248.12 >> ~/.ssh/known_hosts
+                      ssh-keyscan -H 192.168.1.213 >> ~/.ssh/known_hosts
+            - run:
+                  name: Deploy to server
+                  command: |
+                      ssh thanhdo@100.110.248.12 "ls"                  
 
 workflows:
     deploy-dev:
